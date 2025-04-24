@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stacker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+            overflow-x: hidden;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #2c3e50;
+        }
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        button {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1a2533;
+        }
+        
+        /* Page styles */
+        .page {
+            position: absolute;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+        
+        /* Form page */
+        #form-page {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        #form-page.hidden {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        
+        /* Success page */
+        #success-page {
+            transform: translateX(100%);
+            opacity: 0;
+            text-align: center;
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        #success-page.active {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        .success-page h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .success-page p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .success-icon {
+            font-size: 80px;
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Stacker</h1>
+    </header>
+
+    <!-- Form Page -->
+    <div id="form-page" class="page">
+        <div class="form-container">
+            <form id="stacker-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea id="content" name="content" required></textarea>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Page -->
+    <div id="success-page" class="page success-page">
+        <div class="success-icon">✓</div>
+        <h2>Submission Complete!</h2>
+        <p>Thank you for your submission. We have received your information.</p>
+        <button id="new-submission">Submit Another</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('stacker-form');
+            const formPage = document.getElementById('form-page');
+            const successPage = document.getElementById('success-page');
+            const newSubmissionBtn = document.getElementById('new-submission');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Here you would typically send the form data to a server
+                // For this demo, we'll just simulate a submission with a slight delay
+                const email = document.getElementById('email').value;
+                const content = document.getElementById('content').value;
+                
+                console.log('Form submitted:', { email, content });
+                
+                // Transition to success page
+                formPage.classList.add('hidden');
+                
+                // Small delay for animation effect
+                setTimeout(function() {
+                    successPage.classList.add('active');
+                }, 300);
+                
+                // Clear the form
+                form.reset();
+            });
+            
+            newSubmissionBtn.addEventListener('click', function() {
+                // Transition back to form page
+                successPage.classList.remove('active');
+                
+                // Small delay for animation effect
+                setTimeout(function() {
+                    formPage.classList.remove('hidden');
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
